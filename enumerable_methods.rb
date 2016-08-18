@@ -1,4 +1,3 @@
-require 'byebug'
 module Enumerable
   def my_each
     return self unless block_given?
@@ -28,7 +27,6 @@ module Enumerable
       self.my_each { |i| yield(i) } ? true : false
     end
   end
-
 
   def my_any?
     return self unless block_given?
@@ -74,7 +72,6 @@ module Enumerable
     self.my_each { |i| accumulator = yield(accumulator, i) }
     accumulator
   end
-
 end
 
 def multiply_els(array)
@@ -83,42 +80,44 @@ end
 
 
 puts "Tests:" + "\n \n"
+puts "==================="
 
-puts "my_each" + "\n \n"
+puts "my_each tests" + "\n \n"
 p [1,2,3,4,5].my_each { |x| p x}
 puts "\n \n"
-puts "my_each_with_index" + "\n \n"
+
+puts "my_each_with_index tests" + "\n \n"
 p ["A","B","C","D","E"].my_each_with_index { |x, index| puts "#{x}, #{index}"}
 puts "\n"
 
-puts "my_select" + "\n \n"
+puts "my_select tests" + "\n \n"
 p [1,2,3,4,5].my_select { |x| x < 4} == [1,2,3]
 puts "\n"
 
-puts "my_all?" + "\n \n"
+puts "my_all? tests" + "\n \n"
 p ([false, false, true, false].my_all?) == false
 p [1,2,3,4,5].my_all? { |x| x > 0} == true
 p [1,2,3,4,5].my_all? { |x| x < 10} == true
 puts "\n"
 
-puts "my_any?" + "\n \n"
+puts "my_any? tests" + "\n \n"
 p [1,2,3,4,5].my_any? { |x| x > 5} == false
 p [1,2,3,4,5].my_any? { |x| x > 2} == true
 puts "\n"
 
-puts "my_inject" + "\n \n"
-p [1,2,3,4,5].my_inject(1) { |running_total, x| running_total + x} #== 15
-p multiply_els([20,2,-3])
+puts "my_inject tests" + "\n \n"
+p [1,2,3,4,5].my_inject { |running_total, x| running_total + x} == 15
+p multiply_els([20,2,-3]) == -120
 puts "\n"
 
-puts "my_count" + "\n \n"
+puts "my_count tests" + "\n \n"
 p [1,2,3,4,5].my_count == 5
 p [1,2,3,4,5].my_count(3) == 1
 p [1,2,3,4,5].my_count { |x| x > 2} == 3
 puts "\n"
 
-puts "my_map" + "\n \n"
+puts "my_map tests" + "\n \n"
 test = Proc.new{ |z| z ** 3}
 p [1,2,3,4,5].my_map(test) { |y| y * 2} == [1,8,27,64,125]
- p [1,2,3,4,5].my_map(test) == [1,8,27,64,125]
+p [1,2,3,4,5].my_map(test) == [1,8,27,64,125]
 p ([1,2,3,4,5].my_map { |y| y*2}) == [2,4,6,8,10]
