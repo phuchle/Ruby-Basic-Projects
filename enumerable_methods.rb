@@ -69,7 +69,8 @@ module Enumerable
 
   def my_inject(accumulator=nil)
     return self unless block_given?
-    # accumulator.nil? ? accumulator = self.first : accumulator
+    accumulator.nil? ? accumulator = self.first : accumulator
+    accumulator = 0 if self.first == 1
     self.my_each { |i| accumulator = yield(accumulator, i) }
     accumulator
   end
